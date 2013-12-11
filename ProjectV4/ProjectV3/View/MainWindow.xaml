@@ -1,0 +1,54 @@
+﻿<!-- 1. referenties toevoegen-->
+<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:v="clr-namespace:ProjectV3.View"
+        xmlns:vm="clr-namespace:ProjectV3.ViewModel"
+        xmlns:Converters="clr-namespace:ProjectV3.View.Converters" x:Class="ProjectV3.MainWindow"
+        Title="Festival Planner" Height="600" Width="1000" WindowState="Maximized" Background="Black">
+    <Window.Resources>
+        <Converters:StringToUriConverter x:Key="StringToUriConverter"/>
+        <DataTemplate DataType="{x:Type vm:HomePageVM}">
+            <v:HomePage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ContactVM}">
+            <v:Contact/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ArtistVM}">
+            <v:Artist/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LineUpVM}">
+            <v:LineUp/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:TicketingVM}">
+            <v:Ticketing/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SettingsVM}">
+            <v:Settings/>
+        </DataTemplate>
+        <ItemsPanelTemplate x:Key="NavigatieButtons">
+            <WrapPanel />
+        </ItemsPanelTemplate>
+
+    </Window.Resources>
+    <Window.DataContext>
+        <vm:ApplicationVM />
+    </Window.DataContext>
+    <Grid x:Name="Root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <ItemsControl ItemsSource="{Binding Pages}" Grid.Row="0" ItemsPanel="{StaticResource NavigatieButtons}" HorizontalAlignment="Right" VerticalAlignment="Center" >
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding Name}" Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}" Height="47px" Width="90px" Margin="3"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+        </ItemsControl>
+        <ContentControl Content="{Binding CurrentPage}" Grid.Row="1" Margin="0,0,0,20"/>
+        <Image Source="{Binding Festival.ImageLink, Converter={StaticResource StringToUriConverter}}" Margin="10,10,719,5"/>
+    </Grid>
+</Window>

@@ -1,0 +1,30 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Converters="clr-namespace:ProjectV3.View.Converters" xmlns:ViewModel="clr-namespace:ProjectV3.ViewModel" x:Class="ProjectV3.View.HomePage" 
+             mc:Ignorable="d" 
+                xmlns:vm="clr-namespace:ProjectV3.ViewModel"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Converters:StringToUriConverter x:Key="StringToUriConverter"/>
+        <Converters:MultiDateToStringConverter x:Key="MultiDateToStringConverter" />
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <vm:SettingsVM />
+    </UserControl.DataContext>
+    <Grid>
+        <Image HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Margin="76,142,145,105" Source="{Binding Festival.ImageLink, Converter={StaticResource StringToUriConverter}}" Stretch="Uniform"/>
+        <Label Content="Welkom bij Festival Planner." Margin="76,60,-100,206" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="25"/>
+        <TextBlock Foreground="White" Text="{Binding Festival.Name}" Margin="76,94,129,186"/>
+        <TextBlock DataContext="{Binding Festival}" HorizontalAlignment="Stretch" Margin="76,114,-221,163" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Foreground="White">
+            <TextBlock.Text>
+                <MultiBinding Converter="{StaticResource MultiDateToStringConverter}">
+                    <Binding Path="StartDate" />
+                    <Binding Path="EndDate" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+    </Grid>
+</UserControl>
