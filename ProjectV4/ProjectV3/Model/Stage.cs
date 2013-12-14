@@ -64,17 +64,20 @@ namespace ProjectV3.Model
         #region 'Get data'
         public static ObservableCollection<Stage> GetStages()
         {
-            ObservableCollection<Stage> stages = new ObservableCollection<Stage>();
-            string sql = "SELECT * FROM Stages";
-            DbDataReader reader = Database.GetData(sql);
-            while (reader.Read())
+            try
             {
-                stages.Add(MakeStage(reader));
+                ObservableCollection<Stage> stages = new ObservableCollection<Stage>();
+                string sql = "SELECT * FROM Stages";
+                DbDataReader reader = Database.GetData(sql);
+                while (reader.Read())
+                {
+                    stages.Add(MakeStage(reader));
+                }
+                ObservableCollection<Stage> stagesSort = new ObservableCollection<Stage>(from i in stages orderby i.Name select i);
+                reader.Close();
+                return stagesSort;
             }
-            ObservableCollection<Stage> stagesSort = new ObservableCollection<Stage>(from i in stages orderby i.Name select i);
-            reader.Close();
-            return stagesSort;
-        
+            catch { return new ObservableCollection<Stage>(); }
         }
         private static Stage MakeStage(DbDataReader reader)
         {

@@ -66,16 +66,23 @@ namespace ProjectV3.Model
         #region 'Inladen data'
         public static ObservableCollection<Genre> GetGenres()
         {
-            ObservableCollection<Genre> genres = new ObservableCollection<Genre>();
-            string sql = "SELECT * FROM Genres";
-            DbDataReader reader = Database.GetData(sql);
-            while (reader.Read())
+            try
             {
-                genres.Add(MaakGenre(reader));
+                ObservableCollection<Genre> genres = new ObservableCollection<Genre>();
+                string sql = "SELECT * FROM Genres";
+                DbDataReader reader = Database.GetData(sql);
+                while (reader.Read())
+                {
+                    genres.Add(MaakGenre(reader));
+                }
+                ObservableCollection<Genre> genresSort = new ObservableCollection<Genre>(from i in genres orderby i.Name select i);
+                reader.Close();
+                return genres;
             }
-            ObservableCollection<Genre> genresSort = new ObservableCollection<Genre>(from i in genres orderby i.Name select i);
-            reader.Close();
-            return genres;      
+            catch
+            {
+                return new ObservableCollection<Genre>();
+            }
         }
         private static Genre MaakGenre(DbDataReader reader)
         {

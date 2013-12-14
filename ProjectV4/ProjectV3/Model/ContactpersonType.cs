@@ -66,16 +66,20 @@ namespace ProjectV3.Model
         #region 'Inlade data'
         public static ObservableCollection<ContactpersonType> GetContactTypes()
         {
-            ObservableCollection<ContactpersonType> types = new ObservableCollection<ContactpersonType>();
-            string sql = "SELECT * from Jobroles";
-            DbDataReader reader = Database.GetData(sql);
-            while (reader.Read())
+            try
             {
-                types.Add(MakeJobrole(reader));
+                ObservableCollection<ContactpersonType> types = new ObservableCollection<ContactpersonType>();
+                string sql = "SELECT * from Jobroles";
+                DbDataReader reader = Database.GetData(sql);
+                while (reader.Read())
+                {
+                    types.Add(MakeJobrole(reader));
+                }
+                ObservableCollection<ContactpersonType> typesSort = new ObservableCollection<ContactpersonType>(from i in types orderby i.Name select i);
+                reader.Close();
+                return typesSort;
             }
-            ObservableCollection<ContactpersonType> typesSort = new ObservableCollection<ContactpersonType>(from i in types orderby i.Name select i);
-            reader.Close();
-            return typesSort;
+            catch { return new ObservableCollection<ContactpersonType>(); }
 
         }
         private static ContactpersonType MakeJobrole(DbDataReader reader)

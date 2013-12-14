@@ -30,13 +30,15 @@ namespace ProjectV3.Model
         }
         private String _from;
         [Required(ErrorMessage="Geef startuur.")]
+        [RegularExpression(@"^([0-1][0-9]|[2][0-3])u[0-5][0-9]$",ErrorMessage="HHuMM")]
         public String From
         {
             get { return _from; }
             set { _from = value; }
         }
         private String _until;
-        [Required(ErrorMessage="Geef einduur.")]
+        [Required(ErrorMessage = "Geef einduur.")]
+        [RegularExpression(@"^([0-1][0-9]|[2][0-3])u[0-5][0-9]$", ErrorMessage = "HHuMM")]
         public String Until
         {
             get { return _until; }
@@ -93,28 +95,35 @@ namespace ProjectV3.Model
         #region 'Get data'
         public static ObservableCollection<LineUp> GetLineups(Model.Stage selectedstage)
         {
-            ObservableCollection<LineUp> ocLineups = new ObservableCollection<LineUp>();
-            if (selectedstage.ID != "0" && selectedstage.ID != null)
+            try
             {
-                string sql = "SELECT * FROM LineUp WHERE Stage = @StageId";
-                DbParameter SId = Database.AddParameter("@StageId", selectedstage.ID);
-                DbDataReader reader = Database.GetData(sql, SId);
-                while (reader.Read())
+                ObservableCollection<LineUp> ocLineups = new ObservableCollection<LineUp>();
+                if (selectedstage.ID != "0" && selectedstage.ID != null)
                 {
-                    ocLineups.Add(MakeLineUp(reader, selectedstage));
+                    string sql = "SELECT * FROM LineUp WHERE Stage = @StageId";
+                    DbParameter SId = Database.AddParameter("@StageId", selectedstage.ID);
+                    DbDataReader reader = Database.GetData(sql, SId);
+                    while (reader.Read())
+                    {
+                        ocLineups.Add(MakeLineUp(reader, selectedstage));
+                    }
+                    reader.Close();
                 }
-                reader.Close();
-            }
-            ObservableCollection<LineUp> ocLineupsSort = new ObservableCollection<LineUp>(from i in ocLineups orderby i.From select i);
+                ObservableCollection<LineUp> ocLineupsSort = new ObservableCollection<LineUp>(from i in ocLineups orderby i.From select i);
 
-            return ocLineupsSort;
+                return ocLineupsSort;
+            }
+            catch
+            {
+                return new ObservableCollection<LineUp>();
+            }
         }
         private static LineUp MakeLineUp(DbDataReader reader, Stage selectedS)
         {
             LineUp newlu = new LineUp();
             newlu.ID = reader["Id"].ToString();
             newlu.Stage = selectedS;
-            newlu.Until = reader["End"].ToString();
+            newlu.Until = reader["Einde"].ToString();
             newlu.From = reader["Start"].ToString();
             newlu.Date = Convert.ToDateTime(reader["DateOfPlay"].ToString());
             newlu.Band = ZoekBand(reader["Artist"].ToString());
@@ -146,14 +155,14 @@ namespace ProjectV3.Model
             if (this.ID != null && this.ID != "" && this.ID != "0")
             {
                 DbParameter id = Database.AddParameter("@ID", this.ID);
-                string sql = "UPDATE LineUp SET Stage = @stage, Artist = @Artist, DateOfPlay = @Date, Start = @from, End = @until WHERE Id = @ID";
+                string sql = "UPDATE LineUp SET Stage = @stage, Artist = @Artist, DateOfPlay = @Date, Start = @from, Einde = @until WHERE Id = @ID";
                 iAffectedRows += Database.ModifyData(sql, stage, Artist, date, from, until, id);
             }
             else
             {
                 // string sql = "INSERT INTO LineUp (Stage,Band,DateOfPlay,Start,End) VALUES (@stage,@band,@Date,@from,@until)";
                 // iAffectedRows += Database.ModifyData(sql, stage, band, date, from, until);
-                string sql2 = "INSERT INTO LineUp (Stage,Artist, DateOfPlay,Start, End) VALUES (@stage,@Artist, @Date,@from,@until)";
+                string sql2 = "INSERT INTO LineUp (Stage,Artist,DateOfPlay,Start,Einde) VALUES (@stage,@Artist, @Date,@from,@until)";
                // string sql3 = "INSERT INTO LineUp (Stage,Artist,DateOfPlay,Start,End) VALUES (@stage,@band,@Date,@from,@from,@until)";
                 iAffectedRows += Database.ModifyData(sql2, stage, Artist, date, from, until);
             }

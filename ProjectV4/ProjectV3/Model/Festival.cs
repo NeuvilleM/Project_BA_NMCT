@@ -74,16 +74,23 @@ namespace ProjectV3.Model
         
         public static Festival GetFestival()
         {
-            Festival festi = new Festival();
-            string sql = "SELECT * from Festival";
-            DbDataReader reader = Database.GetData(sql);
-            reader.Read();
-            festi.EndDate = Convert.ToDateTime(reader["End"].ToString());
-            festi.ImageLink = reader["Picture"].ToString();
-            festi.Name = reader["FestivalNaam"].ToString();
-            festi.StartDate = Convert.ToDateTime(reader["Start"].ToString());
-            reader.Close();
-            return festi;
+            try
+            {
+                Festival festi = new Festival();
+                string sql = "SELECT * from Festival";
+                DbDataReader reader = Database.GetData(sql);
+                reader.Read();
+                festi.EndDate = Convert.ToDateTime(reader["End"].ToString());
+                festi.ImageLink = reader["Picture"].ToString();
+                festi.Name = reader["FestivalNaam"].ToString();
+                festi.StartDate = Convert.ToDateTime(reader["Start"].ToString());
+                reader.Close();
+                return festi;
+            }
+            catch
+            {
+                return new Festival();
+            }
         }
         public void SaveFestival()
         {

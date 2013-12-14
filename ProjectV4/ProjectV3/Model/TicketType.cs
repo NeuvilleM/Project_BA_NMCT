@@ -82,16 +82,23 @@ namespace ProjectV3.Model
         #region 'Ophalen data'
         public static ObservableCollection<TicketType> GetTicketTypes()
         {
-            ObservableCollection<TicketType> types = new ObservableCollection<TicketType>();
-            string sql = "SELECT * from TicketType";
-            DbDataReader reader = Database.GetData(sql);
-            while (reader.Read())
+            try
             {
-                types.Add(MaakTicketType(reader));
+                ObservableCollection<TicketType> types = new ObservableCollection<TicketType>();
+                string sql = "SELECT * from TicketType";
+                DbDataReader reader = Database.GetData(sql);
+                while (reader.Read())
+                {
+                    types.Add(MaakTicketType(reader));
+                }
+                ObservableCollection<TicketType> typesSort = new ObservableCollection<TicketType>(from i in types orderby i.Name select i);
+                reader.Close();
+                return types;
             }
-            ObservableCollection<TicketType> typesSort = new ObservableCollection<TicketType>(from i in types orderby i.Name select i);
-            reader.Close();
-            return types;
+            catch
+            {
+                return new ObservableCollection<TicketType>();
+            }
         }
         private static TicketType MaakTicketType(DbDataReader reader)
         {

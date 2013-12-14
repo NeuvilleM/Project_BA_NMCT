@@ -48,8 +48,8 @@ ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemp
 ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
             <TextBox Height="26.209" Margin="19.198,0,9.199,0" Grid.Row="10" TextWrapping="Wrap" VerticalAlignment="Top" Width="214" Text="{Binding SelectedTicket.TicketholderEmail, UpdateSourceTrigger=PropertyChanged,
 ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
-            <Label Content="Ticket:" Height="26.209" Margin="9.999,0,18.397,0" VerticalAlignment="Top" Width="214" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2"/>
-            <ComboBox Grid.Column="1" Height="25.478" Margin="9.999,0,18.397,0" Grid.Row="10" VerticalAlignment="Top" Width="214" Grid.ColumnSpan="2" ItemsSource="{Binding Types}" SelectedValuePath="{Binding /Name}" SelectedItem="{Binding SelectedTicket.TicketType.Name}" SelectedValue="{Binding SelectedTicket.TicketType}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
+            <Label Content="Ticket:" Height="26" Margin="11,0,19,0" VerticalAlignment="Top" Width="214" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"/>
+            <ComboBox Grid.Column="1" Height="25" Margin="11,0,19,0" Grid.Row="6" VerticalAlignment="Top" Width="214" Grid.ColumnSpan="2" ItemsSource="{Binding Types}" SelectedValuePath="ID" SelectedItem="{Binding SelectedTicket.TicketType}" SelectedValue="{Binding SelectedTicket.TicketType.ID}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }" DisplayMemberPath="Name"/>
             <ListBox Margin="19.198,0,10.075,10" Grid.ColumnSpan="2" Grid.RowSpan="5" SelectedItem="{Binding SelectedTicket}" ItemsSource="{Binding OrderedTickets}" SelectedValuePath="{Binding /Ticketholder}" DisplayMemberPath="{Binding /Ticketholder}"/>
             <Grid Margin="19.198,0,10.075,10" Grid.RowSpan="2" Grid.Row="5" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
@@ -64,6 +64,8 @@ ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemp
                 <Button Content="Save" Margin="10" Grid.Column="1" Command="{Binding SaveTicket, Mode=OneWay}"/>
                 <Button Content="Delete" Margin="10" Grid.Column="2" Command="{Binding DeleteTicket, Mode=OneWay}"/>
             </Grid>
+            <Label Content="Amount:" Height="26" Margin="11,2,19,0" VerticalAlignment="Top" Width="214" Grid.Row="9" Grid.ColumnSpan="2" Grid.Column="1"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="11,3,0,0" Grid.Row="10" TextWrapping="Wrap" Text="{Binding SelectedTicket.Number}" VerticalAlignment="Top" Width="214" Grid.ColumnSpan="2"/>
         </Grid>
         <Grid Grid.Row="1" Margin="0,0,0,29">
             <Grid.ColumnDefinitions>

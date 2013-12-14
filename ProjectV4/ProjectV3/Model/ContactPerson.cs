@@ -78,16 +78,23 @@ namespace ProjectV3.Model
         #region 'Inladen Data'
         public static ObservableCollection<ContactPerson> GetContacts()
         {
-            ObservableCollection<ContactPerson> cps = new ObservableCollection<ContactPerson>();
-            string sql = "SELECT * from Contact";
-            DbDataReader reader = Database.GetData(sql);
-            while(reader.Read())
+            try
             {
-                cps.Add(MakeContact(reader));
+                ObservableCollection<ContactPerson> cps = new ObservableCollection<ContactPerson>();
+                string sql = "SELECT * from Contact";
+                DbDataReader reader = Database.GetData(sql);
+                while (reader.Read())
+                {
+                    cps.Add(MakeContact(reader));
+                }
+                ObservableCollection<ContactPerson> cpsSort = new ObservableCollection<ContactPerson>(from i in cps orderby i.Name select i);
+                reader.Close();
+                return cpsSort;
             }
-            ObservableCollection<ContactPerson> cpsSort  = new ObservableCollection<ContactPerson>(from i in cps orderby i.Name select i);
-            reader.Close();
-            return cpsSort;
+            catch
+            {
+                return new ObservableCollection<ContactPerson>();
+            }
         }
         private static ContactPerson MakeContact(DbDataReader reader)
         {

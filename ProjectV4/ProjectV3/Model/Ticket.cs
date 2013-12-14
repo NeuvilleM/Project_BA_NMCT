@@ -49,6 +49,8 @@ namespace ProjectV3.Model
             get { return _HolderLast; }
             set { _HolderLast = value; }
         }
+        [Required]
+        public int Number { get; set; }
         public bool IsValid()
         {
             return Validator.TryValidateObject(this, new ValidationContext(this, null, null),null, true);
@@ -85,16 +87,21 @@ namespace ProjectV3.Model
         #region 'Inhalen data'
         public static ObservableCollection<Ticket> GetTickets()
         {
-            ObservableCollection<Ticket> orders = new ObservableCollection<Ticket>();
-            string sql = "SELECT * FROM OrderedTickets";
-            DbDataReader reader = Database.GetData(sql);
-            while (reader.Read())
+            try
             {
-                orders.Add(MaakTicket(reader));
+                ObservableCollection<Ticket> orders = new ObservableCollection<Ticket>();
+                string sql = "SELECT * FROM orderedtickets";
+                DbDataReader reader = Database.GetData(sql);
+                while (reader.Read())
+                {
+                    orders.Add(MaakTicket(reader));
+                }
+                ObservableCollection<Ticket> ordersSort = new ObservableCollection<Ticket>(from i in orders orderby i.Ticketholder select i);
+                reader.Close();
+                return ordersSort;
             }
-            ObservableCollection<Ticket> ordersSort = new ObservableCollection<Ticket>(from i in orders orderby i.Ticketholder select i);
-            reader.Close();
-            return ordersSort;
+            catch
+            { return new ObservableCollection<Ticket>(); }
         }
 
         private static Ticket MaakTicket(DbDataReader reader)
@@ -105,6 +112,9 @@ namespace ProjectV3.Model
             t.TicketholderEmail = reader["Email"].ToString();
             t.TicketType = GetTicketType(reader["TicketType"].ToString());
             t.HolderLast = reader["HolderLast"].ToString();
+            int i = 0;
+            Int32.TryParse(reader["Number"].ToString(), out i);
+            t.Number = i;
             return t;
         }
         private static Model.TicketType GetTicketType(string p)
@@ -127,15 +137,16 @@ namespace ProjectV3.Model
             DbParameter HL = Database.AddParameter("@HL", this.HolderLast);
             DbParameter Email = Database.AddParameter("@Email", this.TicketholderEmail);
             DbParameter Type = Database.AddParameter("@Type", this.TicketType.ID);
+            DbParameter N = Database.AddParameter("@N", this.Number);
             if (CheckIfAlreadyExist(tickets, this.ID))
             {
-                string sql = "UPDATE OrderedTickets SET Holder = @HF, HolderLast = @HL, Email = @Email, TicketType = @Type WHERE Id=@ID";
-                iAffectedRows += Database.ModifyData(sql, HF, HL, Email, Type, id);
+                string sql = "UPDATE OrderedTickets SET Holder = @HF, HolderLast = @HL, Email = @Email, TicketType = @Type, Number = @N WHERE Id=@ID";
+                iAffectedRows += Database.ModifyData(sql, HF, HL, Email, Type,N, id);
             }
             else 
             {
-                string sql = "INSERT INTO OrderedTickets (Holder, HolderLast, Email, TicketType) VALUES (@HF, @HL,@Email, @Type)";
-                iAffectedRows += Database.ModifyData(sql, HF, HL, Email, Type);
+                string sql = "INSERT INTO OrderedTickets (Holder, HolderLast, Email, TicketType,Number) VALUES (@HF, @HL,@Email, @Type,@N)";
+                iAffectedRows += Database.ModifyData(sql, HF, HL, Email, Type,N);
             }
             Console.WriteLine(iAffectedRows);
         }

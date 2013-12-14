@@ -73,7 +73,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="5*"/>
@@ -86,15 +86,15 @@
                 <Label Content="Artist&#xA;" Margin="0.667,0,0,1.217" Grid.ColumnSpan="2" Height="49.297" VerticalAlignment="Bottom"/>
                 <Label Content="Artiest:" Padding="5,3" Grid.Row="1" Margin="0,0,0,0.675"/>
                 <Label Content="Uur:" Margin="0.667,0,0,0.676" Grid.Row="5" Padding="5,3"/>
-                <TextBox Grid.Row="6" TextWrapping="Wrap" Text="{Binding SelectedLineUp.From, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Margin="1,0,0,10" HorizontalAlignment="Left" Width="75" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
-                <TextBox Grid.Row="6" TextWrapping="Wrap" Text="{Binding SelectedLineUp.Until, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Margin="128,0,0,10" HorizontalAlignment="Left" Width="73" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
+                <TextBox Grid.Row="6" TextWrapping="Wrap" Text="{Binding SelectedLineUp.From, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Margin="1,0,0,22" HorizontalAlignment="Left" Width="75" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
+                <TextBox Grid.Row="6" TextWrapping="Wrap" Text="{Binding SelectedLineUp.Until, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Margin="127,0,0,22" HorizontalAlignment="Left" Width="73" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
                 <Image Grid.Column="1" Grid.Row="1" Grid.RowSpan="3"/>
                 <ComboBox Margin="2,37,99,10" Grid.Row="1" SelectedItem="{Binding SelectedLineUp.Band}" ItemsSource="{Binding Artists}" Grid.ColumnSpan="2" Grid.RowSpan="2" SelectedValue="{Binding SelectedLineUp.Band.ID}" SelectedValuePath="ID" DisplayMemberPath="Name" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
                 <Label Content="Dag:" Padding="5,3" Grid.Row="3" Margin="0.667,0.675,98.726,0" Grid.ColumnSpan="2"/>
                 <Label Content="Podium:" Margin="1.334,0,98.726,0.676" Grid.Row="7" Padding="5,3" Grid.ColumnSpan="2"/>
                 <ComboBox Margin="0,0,1,10" Grid.Row="8" SelectedItem="{Binding SelectedLineUp.Stage, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" ItemsSource="{Binding Stages}" SelectedValue="{Binding SelectedLineUp.Stage.ID}" SelectedValuePath="ID" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
-                <DatePicker Grid.Row="4" Margin="0,0,0,10" DisplayDateEnd="{Binding Festival.EndDate}" DisplayDateStart="{Binding Festival.StartDate}" SelectedDate="{Binding SelectedLineUp.Date, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" DisplayDate="{Binding SelectedLineUp.Date, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
-                <Label Content="-" Margin="81,0,0,15" Grid.Row="6" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Center" Padding="5,5,5,0" HorizontalAlignment="Left" Width="47"/>
+                <DatePicker Grid.Row="4" Margin="0,0,0,10" SelectedDate="{Binding SelectedLineUp.Date, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" DisplayDateEnd="{Binding Festival.EndDate}" DisplayDateStart="{Binding Festival.StartDate.Date, Mode=OneWay}"  DisplayDate="{Binding SelectedLineUp.Date, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
+                <Label Content="-" Margin="80,32,0,22" Grid.Row="5" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Center" Padding="5,5,5,0" HorizontalAlignment="Left" Width="47" Grid.RowSpan="2"/>
             </Grid>
         </Grid>
     </Grid>

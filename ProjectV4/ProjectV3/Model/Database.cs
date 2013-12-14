@@ -23,10 +23,17 @@ namespace ProjectV3.Model
         // stap 1: connectie opvragen
         private static DbConnection GetConnection()
         {
-            DbConnection con = DbProviderFactories.GetFactory(ConnectionString.ProviderName).CreateConnection();
-            con.ConnectionString = ConnectionString.ConnectionString;
-            con.Open();
-            return con;
+            try
+            {
+                DbConnection con = DbProviderFactories.GetFactory(ConnectionString.ProviderName).CreateConnection();
+                con.ConnectionString = ConnectionString.ConnectionString;
+                con.Open();
+                return con;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
         // stap 2: connectie vrijgeven
         public static void ReleaseConnection(DbConnection con)
@@ -61,8 +68,15 @@ namespace ProjectV3.Model
             // doorgegeven worden via de methode BuildCommand.
             // naar de factory specifiek voor mijn provider (params zijn provider afhankelijk)
             DbParameter par = DbProviderFactories.GetFactory(ConnectionString.ProviderName).CreateParameter();
-            par.ParameterName = naam;
-            par.Value = value;
+                
+            if (value != null)
+            {
+                par.ParameterName = naam;
+                par.Value = value;
+            }
+            else {
+                par.ParameterName = naam;
+            }
             return par;
         }
         // stap 4a: Data ophalen (select-statements)
@@ -110,7 +124,7 @@ namespace ProjectV3.Model
                 Console.WriteLine(ex.Message);
                 if (command != null) ReleaseConnection(command.Connection);
                 // fout doorgeven aan de aanroeper
-                throw ex;
+                return 0;
             }
         }
 

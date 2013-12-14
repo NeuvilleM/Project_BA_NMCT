@@ -26,8 +26,8 @@ namespace ProjectV3.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\Matthias\\Documents\\Festiva" +
-            "lData.accdb")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=GHOST\\SQLEXPRESS;Initial Catalog=festivalapp;User ID=SSAUserV2;Passwo" +
+            "rd=P@ssw0rd")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

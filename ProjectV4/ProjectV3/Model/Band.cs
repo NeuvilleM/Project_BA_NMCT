@@ -31,6 +31,7 @@ namespace ProjectV3.Model
             set { _name = value; }
         }
         private String _picture;
+        
         [Url (ErrorMessage="Voer een correcte url, of niets in.")]
         public String Picture
         {
@@ -69,40 +70,54 @@ namespace ProjectV3.Model
         #region 'Ophalen data van database'
         public static ObservableCollection<Band> GetArtists()
         {
-            ObservableCollection<Genre> g = Genre.GetGenres();
-            ObservableCollection<Band> artiesten = new ObservableCollection<Band>();
-            string sql = "SELECT Artist.Id, Artist.Picture, Artist.Naam, Artist.Description, Artist.Twitter, Artist.Facebook, Artist_Genre.ArtistID, Artist_Genre.GenreID";
-            sql += " FROM Artist INNER JOIN Artist_Genre ON Artist.Id = Artist_Genre.ArtistID";
-            DbDataReader reader = Database.GetData(sql);
-            // overloop elkereader["Id"].ToString()) rij en maak er een object van
-            while (reader.Read()) {
-                if (CheckIfAlreadyExist(artiesten, reader["Id"].ToString()))
+            try
+            {
+                ObservableCollection<Genre> g = Genre.GetGenres();
+                ObservableCollection<Band> artiesten = new ObservableCollection<Band>();
+                string sql = "SELECT Artist.Id, Artist.Picture, Artist.Naam, Artist.Description, Artist.Twitter, Artist.Facebook, Artist_Genre.ArtistID, Artist_Genre.GenreID";
+                sql += " FROM Artist INNER JOIN Artist_Genre ON Artist.Id = Artist_Genre.ArtistID";
+                DbDataReader reader = Database.GetData(sql);
+                // overloop elkereader["Id"].ToString()) rij en maak er een object van
+                while (reader.Read())
                 {
-                    artiesten = UpdateArtiestGenre(artiesten, reader, g);
+                    if (CheckIfAlreadyExist(artiesten, reader["Id"].ToString()))
+                    {
+                        artiesten = UpdateArtiestGenre(artiesten, reader, g);
+                    }
+                    else
+                    {
+                        artiesten.Add(MaakArtist(reader, g));
+                        artiesten = UpdateArtiestGenre(artiesten, reader, g);
+                    }
                 }
-                else
-                {
-                    artiesten.Add(MaakArtist(reader, g));
-                    artiesten = UpdateArtiestGenre(artiesten, reader, g);
-                }
+                artiesten.OrderBy(x => x.Name);
+                ObservableCollection<Band> artiestenSort = new ObservableCollection<Band>(from i in artiesten orderby i.Name select i);
+                reader.Close();
+                return artiestenSort;
             }
-            artiesten.OrderBy(x => x.Name);
-            ObservableCollection<Band> artiestenSort = new ObservableCollection<Band>(from i in artiesten orderby i.Name select i);
-            reader.Close();
-            return artiestenSort;
+            catch 
+            {
+                return new ObservableCollection<Band>();
+            }
         }
         private static ObservableCollection<Band> UpdateArtiestGenre(ObservableCollection<Band> artiesten, DbDataReader reader, ObservableCollection<Genre> genres)
         {
-            Band teUpdaten = ZoekBand(artiesten, reader["Id"].ToString());
-            int i = artiesten.IndexOf(teUpdaten);
-            Genre g = ZoekGenre(genres, reader["GenreID"].ToString());
-            if (g != null) 
-            { 
-                teUpdaten.Genres.Add(ZoekGenre(genres, reader["GenreID"].ToString()));
+            try
+            {
+                Band teUpdaten = ZoekBand(artiesten, reader["Id"].ToString());
+                int i = artiesten.IndexOf(teUpdaten);
+                Genre g = ZoekGenre(genres, reader["GenreID"].ToString());
+                if (g != null)
+                {
+                    teUpdaten.Genres.Add(ZoekGenre(genres, reader["GenreID"].ToString()));
+                }
+                artiesten[i] = teUpdaten;
+
+                return artiesten;
             }
-            artiesten[i] = teUpdaten;
-            
-            return artiesten;
+            catch {
+                return new ObservableCollection<Band>();
+            }
         }
         private static Genre ZoekGenre(ObservableCollection<Genre> genres, string p)
         {
@@ -140,31 +155,37 @@ namespace ProjectV3.Model
         #region 'Save acties'
         public void SaveArtist()
         {
-            int iAffectedRows = 0;
-            ObservableCollection<Band> artiesten = GetArtists();
-            DbParameter Pic = Database.AddParameter("@Picture", this.Picture);
-            DbParameter Name = Database.AddParameter("@Naam", this.Name);
-            DbParameter Desc = Database.AddParameter("@Description", this.Description);
-            DbParameter Twit = Database.AddParameter("@Twitter", this.Twitter);
-            DbParameter Face = Database.AddParameter("@Facebook", this.Facebook);
-            DbParameter id = Database.AddParameter("@ID", this.ID);
-            if (CheckIfAlreadyExist(artiesten, this.ID))
+            try
             {
-                string sql = "UPDATE Artist SET Picture = @Picture, Naam = @Naam, Description = @Description, Twitter = @Twitter, Facebook=@Facebook WHERE ID = @ID";
-                iAffectedRows += Database.ModifyData(sql, Pic, Name, Desc, Twit, Face, id);
-                UpdateGenresInDatabase(this.ID, this.Genres);
+                int iAffectedRows = 0;
+                ObservableCollection<Band> artiesten = GetArtists();
+                DbParameter Pic = Database.AddParameter("@Picture", this.Picture);
+                DbParameter Name = Database.AddParameter("@Naam", this.Name);
+                DbParameter Desc = Database.AddParameter("@Description", this.Description);
+                DbParameter Twit = Database.AddParameter("@Twitter", this.Twitter);
+                DbParameter Face = Database.AddParameter("@Facebook", this.Facebook);
+                DbParameter id = Database.AddParameter("@ID", this.ID);
+                if (CheckIfAlreadyExist(artiesten, this.ID))
+                {
+                    string sql = "UPDATE Artist SET Picture = @Picture, Naam = @Naam, Description = @Description, Twitter = @Twitter, Facebook=@Facebook WHERE ID = @ID";
+                    iAffectedRows += Database.ModifyData(sql, Pic, Name, Desc, Twit, Face, id);
+                    UpdateGenresInDatabase(this.ID, this.Genres);
+                }
+                else
+                {
+
+                    string sql = "INSERT INTO Artist (Picture, Naam, Description, Twitter, Facebook)VALUES (@Picture, @Naam, @Description, @Twitter, @Facebook)";
+                    iAffectedRows += Database.ModifyData(sql, Pic, Name, Desc, Twit, Face);
+                    InsertGenresInDatabase(this.Name, this.Genres);
+                }
+                Console.WriteLine(iAffectedRows);
             }
-            else
-            {
-                
-               string sql = "INSERT INTO Artist (Picture, Naam, Description, Twitter, Facebook)VALUES (@Picture, @Naam, @Description, @Twitter, @Facebook)";
-                iAffectedRows += Database.ModifyData(sql, Pic, Name, Desc, Twit, Face);
-                InsertGenresInDatabase(this.Name,this.Genres);
-            }
-            Console.WriteLine(iAffectedRows);
+            catch { Console.WriteLine("A problem occured while saving data"); }
+            
         }
         private void InsertGenresInDatabase(string name, ObservableCollection<Genre> observableCollection)
         {
+            
            // zoek band id in database
             string sql = "SELECT * from Artist WHERE Naam = @name";
             DbParameter Name = Database.AddParameter("@name", name);
