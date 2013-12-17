@@ -53,7 +53,7 @@ namespace ProjectV3.Model
         }
         private String _email;
         [EmailAddress(ErrorMessage="Zorg voor een correct emailformaat")]
-        [StringLength(45,MinimumLength=5,ErrorMessage="De email moet tussen 45 en 5 tekens zijn.")]
+        [StringLength(45,ErrorMessage="De email moet tussen 45 en 5 tekens zijn.")]
         public String Email
         {
             get { return _email; }
@@ -212,6 +212,7 @@ namespace ProjectV3.Model
 }
         public bool IsValid()
         {
+            //return true;
             return Validator.TryValidateObject(this, new ValidationContext(this, null, null),
             null, true);
         }

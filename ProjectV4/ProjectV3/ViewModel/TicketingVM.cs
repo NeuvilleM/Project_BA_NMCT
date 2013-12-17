@@ -1,11 +1,16 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using GalaSoft.MvvmLight.Command;
+using Microsoft.Win32;
 using ProjectV3.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace ProjectV3.ViewModel
@@ -202,7 +207,122 @@ namespace ProjectV3.ViewModel
         }
         #endregion
         #endregion
+        #region 'Commands for ticketexport'
+        public ICommand SaveFileCommand { get { return new RelayCommand(SaveDataToFile); } }
+        public ICommand SaveFilesCommand { get { return new RelayCommand(SaveDataToFiles); } }
+        public void SaveDataToFiles()
+        {
+            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            ofd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            ofd.Filter = "word-template|*.docx";
+            if (ofd.ShowDialog() == true)
+            {
+                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                DialogResult sfd = fbd.ShowDialog();
+                
+            if (sfd == DialogResult.OK)
+            {
+                string targetpath = fbd.SelectedPath;
+                foreach (Ticket t in OrderedTickets)
+                {
+                    StartFileWegschrijven(ofd.FileName, t, targetpath);
+                }
+            }
+            }
+
+        }
+        public void SaveDataToFile()
+        {
+            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            ofd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            ofd.Filter = "word-template|*.docx";
+            if (ofd.ShowDialog() == true)
+            {
+                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                DialogResult sfd = fbd.ShowDialog();
+
+                if (sfd == DialogResult.OK)
+                {
+                    string targetpath = fbd.SelectedPath;
+                    
+                        StartFileWegschrijven(ofd.FileName, SelectedTicket, targetpath);
+                    
+                }
+            }
+
+        }
+        public void StartFileWegschrijven(string sBestandsnaam, Ticket ticket, string targetpath)
+        {
+            //int iTeller = 0;
+            
+                
+                if (!System.IO.Directory.Exists(targetpath)) { System.IO.Directory.CreateDirectory(targetpath); }
+
+                string filenaam = ticket.Ticketholder + "_" + ticket.HolderLast + "_" + ticket.ID + ".docx";
+                string destinationfile = System.IO.Path.Combine(targetpath, filenaam);
+                File.Copy(sBestandsnaam, destinationfile, true);
+                WordprocessingDocument newdoc = WordprocessingDocument.Open(destinationfile, true);
+                IDictionary<String, BookmarkStart> bookmarks = new Dictionary<String, BookmarkStart>();
+                foreach (BookmarkStart bms in newdoc.MainDocumentPart.RootElement.Descendants<BookmarkStart>())
+                {
+                    bookmarks[bms.Name] = bms;
+                }
+                Festival f = new Festival();
+                f = Festival.GetFestival();
+                if (f.Name != null)
+                {
+                    bookmarks["FestivalNaam"].Parent.InsertAfter<Run>(new Run(new Text(f.Name)), bookmarks["FestivalNaam"]);
+                }
+                bookmarks["Aantal"].Parent.InsertAfter<Run>(new Run(new Text(ticket.Number.ToString())), bookmarks["Aantal"]);
+                bookmarks["Email"].Parent.InsertAfter<Run>(new Run(new Text(ticket.TicketholderEmail)), bookmarks["Email"]);
+                bookmarks["Voornaam"].Parent.InsertAfter<Run>(new Run(new Text(ticket.Ticketholder)), bookmarks["Voornaam"]);
+                bookmarks["Naam"].Parent.InsertAfter<Run>(new Run(new Text(ticket.HolderLast)), bookmarks["Naam"]);
+                bookmarks["Ticket"].Parent.InsertAfter<Run>(new Run(new Text(ticket.TicketType.Name)), bookmarks["Ticket"]);
+            /*
+                if (f.ImageLink != null && f.ImageLink != null)
+                {
+                    string[] arrays = f.ImageLink.Split('.');
+                    int i = arrays.Count();
+                    MainDocumentPart mainpart = newdoc.MainDocumentPart;
+                    if (arrays[i - 1] == "png")
+                    {
+                        ImagePart img = mainpart.AddImagePart(ImagePartType.Png);
+                        using (FileStream stream = new FileStream(f.ImageLink, FileMode.Open))
+                        {
+                            img.FeedData(stream);
+                        }
+                    }*/
+                    DocumentFormat.OpenXml.Wordprocessing.Table t = new DocumentFormat.OpenXml.Wordprocessing.Table();
+                    for (int tic = 1; tic <= ticket.Number; tic++)
+                    {
+                        //bookmarks["Barcode"].Parent.InsertAfter<Run>(new Run(new Text(" barcode "+tic.ToString()+" : ")), bookmarks["Barcode"]);
+            
+                        string val = "T"+ticket.ID +"y"+ ticket.TicketType.ID +"c"+ tic.ToString(); ;
+                        
+                        Run run = new Run(new Text(val));
+                        RunProperties prop = new RunProperties();
+                        RunFonts font = new RunFonts() { Ascii = "Free 3 of 9 Extended", HighAnsi = "Free 3 of 9 Extended" };
+                        
+                        FontSize size = new FontSize() { Val = "72" };
+                        prop.Append(font);
+                        prop.Append(size);
+                        run.PrependChild<RunProperties>(prop);
+                        TableRow tr1 = new TableRow();
+                        TableCell tc1 = new TableCell(new Paragraph(new DocumentFormat.OpenXml.Wordprocessing.Run(new DocumentFormat.OpenXml.Wordprocessing.Text("barcode "+tic.ToString()+": "))));
+                        TableCell tc2 = new TableCell(new Paragraph(run));
+                        tr1.Append(tc1, tc2);
+                        t.AppendChild(tr1);
+                        
+                    }
+                    bookmarks["Barcode"].Parent.InsertAfter<DocumentFormat.OpenXml.Wordprocessing.Run>(new DocumentFormat.OpenXml.Wordprocessing.Run(new DocumentFormat.OpenXml.Wordprocessing.Table(t)), bookmarks["Barcode"]);
+                   
+                    //bookmarks["Barcode"].Parent.InsertAfter<Run>(new Run(new DocumentFormat.OpenXml.Wordprocessing.Table(t)), bookmarks["Barcode"]);
+                    newdoc.Close();
+                }
+                
+                      
+        }
+        #endregion
 
 
     }
-}

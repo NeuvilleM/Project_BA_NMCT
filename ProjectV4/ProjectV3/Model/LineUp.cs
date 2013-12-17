@@ -65,7 +65,7 @@ namespace ProjectV3.Model
         }
         public override string ToString()
         {
-            return Stage + "; " + Band + "; " + Date.ToShortDateString() + "; " + From;
+            return Date.ToShortDateString() + ": " + Band.Name + " (" + From + "-" + Until + ")";
         }
         public string Error
         {

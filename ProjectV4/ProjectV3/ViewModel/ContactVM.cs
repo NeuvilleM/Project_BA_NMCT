@@ -80,15 +80,19 @@ namespace ProjectV3.ViewModel
                 ContactsForListbox = Contacts;
                 ObservableCollection<ContactPerson> filter1 = new ObservableCollection<ContactPerson>();
                 ObservableCollection<ContactPerson> filter2 = new ObservableCollection<ContactPerson>();
+                ObservableCollection<ContactPerson> filter3 = new ObservableCollection<ContactPerson>();
                     foreach (ContactPerson cp in ContactsForListbox)
                     {
                         string sName = cp.Name.ToLower();
                         string sCompany = cp.Company.ToLower();
+                        string sJobrole = cp.JobRole.Name.ToLower();
                         string sCriteria = SearchCriteria.ToLower();
                         if (sName.Contains(sCriteria))
                             filter1.Add(cp);
                         if (sCompany.Contains(sCriteria))
                             filter2.Add(cp);
+                        if (sJobrole.Contains(sCriteria))
+                            filter3.Add(cp);
                     }
                     foreach (ContactPerson cp in filter2)
                     {
@@ -98,6 +102,11 @@ namespace ProjectV3.ViewModel
                     foreach (ContactPerson cp in filter1)
                     {
                         filter2.Add(cp);
+                    }
+                    foreach (ContactPerson cp in filter3)
+                    {
+                        if (filter2.IndexOf(cp) < 0)
+                            filter2.Add(cp);
                     }
                     ContactsForListbox = filter2;
                     

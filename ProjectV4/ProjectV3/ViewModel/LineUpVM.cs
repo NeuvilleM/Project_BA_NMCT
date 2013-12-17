@@ -17,7 +17,7 @@ namespace ProjectV3.ViewModel
         {
             _stages = Stage.GetStages();
             Festival = new Festival();
-            Festival.GetFestival();
+            Festival = Festival.GetFestival();
             Artists = Band.GetArtists();
             _selectedStage = new Stage();
         }
@@ -169,10 +169,69 @@ namespace ProjectV3.ViewModel
             }
             if (SelectedLineUp.Band == null)
                 return false;
+            if (!IsTimePlacingCorrect(SelectedLineUp))
+                return false;
             if (SelectedLineUp.IsValid()) return true;
             else return false;
         }
 
+        private bool IsTimePlacingCorrect(LineUp SelectedLineUp)
+        {
+            
+            // linups komen gesorteerd binnen op startuur
+            // STAP 1: controleren of einde niet voor start ligt
+            if (!IsStartBeforeEnd()) return false; 
+            // er is nu al gecontroleerd geweest of de uren in uren wel effectief uren zijn
+            // dit voorkomt dat we dit opnieuw moeten controleren
+            // STAP 2: controleren of start niet tijdens speeluren van anderen band ligt
+            // STAP 3: controleren of einde niet tijdens speeluren van andere band ligt
+            // STAP 4: controleren of einde voor start volgende band ligt
+            return true;
+        }
+
+        
+        private int[] getStartAndEnd(LineUp tezoekenlinup)
+        {
+            int[] uren = new int[4];
+            int iUurStart;
+            int iMinStart;
+            string sUurStart = tezoekenlinup.From.Substring(0, 2);
+            string sMinStart = tezoekenlinup.From.Substring(3, 2);
+            if (Int32.TryParse(sUurStart, out iUurStart) && Int32.TryParse(sMinStart, out iMinStart))
+            {
+                if (iUurStart < 24 && iUurStart >= 0) uren[0] = iUurStart;
+                else uren[0] = -1;
+                if (iMinStart < 60 && iMinStart >= 0) uren[1] = iMinStart;
+                else uren[1] = -1;
+            }
+            int iUurEnd;
+            int iMinEnd;
+            string sUurEnd = tezoekenlinup.Until.Substring(0, 2);
+            string sMinEnd = tezoekenlinup.Until.Substring(3, 2);
+            if (Int32.TryParse(sUurEnd, out iUurEnd) && Int32.TryParse(sMinEnd, out iMinEnd))
+            {
+                if (iUurEnd < 24 && iUurEnd >= 0) uren[2] = iUurEnd;
+                else uren[2] = -1;
+                if (iMinEnd < 60 && iMinEnd >= 0) uren[3] = iMinEnd;
+                else uren[3] = -1;
+            }
+            return uren;
+        }
+        private bool IsStartBeforeEnd()
+        {
+            if (SelectedLineUp.From == null || SelectedLineUp.Until == null) return false;
+        if (SelectedLineUp.From.Length != 5 || SelectedLineUp.Until.Length != 5) return false;
+        int [] uren = getStartAndEnd(SelectedLineUp);
+        foreach (int i in uren) { if (i < 0)return false; }
+        // nu we zeker zijn dat alle waarden in uren effectief een tijdswaarde is kunnen
+        // we verder controleren uren[uurstart, minstart, uurend, minend]
+        if (uren[2] < uren[0]) return false;
+        if (uren[2] == uren[0])
+        {
+            if (uren[3] < uren[1]) return false;
+        }
+        return true;
+        }
         public void SaveExecuteLineUp()
         {
             SelectedLineUp.SaveLineUp();

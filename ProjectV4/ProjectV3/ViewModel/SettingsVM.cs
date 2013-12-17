@@ -204,6 +204,7 @@ namespace ProjectV3.ViewModel
         }
         private bool CanExecuteDeleteGenre()
         {
+            if (SelectedGenre.ID == "15") return false;
             if (SelectedGenre.Name == "Name?") { return false; }
             return true;
         }

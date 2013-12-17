@@ -11,11 +11,8 @@
         <vmm:ContactVM />
     </UserControl.DataContext>
     <UserControl.Resources>
-        <DataTemplate x:Key="ContactTemplate">
-            <Grid HorizontalAlignment="Stretch"  >
-                <Grid.Background>
-                    <SolidColorBrush Color="Black" Opacity="0"/>
-                </Grid.Background>
+        <DataTemplate x:Key="ContactTemplate" >
+            <Grid HorizontalAlignment="Stretch" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
@@ -26,7 +23,7 @@
                 </Grid.RowDefinitions>
                 <Label Content="{Binding Name}" Grid.Column="0" Grid.ColumnSpan="2" />
                 <Label Content="{Binding Company}" Grid.Column="0" Grid.Row="1" />
-                <Label Content="{Binding JobRole.Name}" Grid.Column="1" Grid.Row="1" />
+                <Label Content="{Binding JobRole.Name}" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Right" />
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
@@ -42,8 +39,12 @@
         </Grid.RowDefinitions>
         <TextBox Height="37" Margin="50,105,36,0"  TextWrapping="Wrap" Text="{Binding SearchCriteria, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" />
         <ListBox Margin="50,10,37,30" Grid.Row="1" ItemsSource="{Binding ContactsForListbox, Mode=OneWay}" SelectedItem="{Binding SelectedContact}" ItemTemplate="{StaticResource ContactTemplate}">
-            
-        </ListBox>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox> 
         <Grid Grid.Column="1" HorizontalAlignment="Left" Height="398" Grid.Row="1" VerticalAlignment="Top" Width="99">
             <Button Content="New" Margin="10,10,10,338.3" Command="{Binding NewContact, Mode=OneWay}"/>
             <Button Content="Save" Margin="10,65,10,283.3" Command="{Binding SaveContacts, Mode=OneWay}"/>

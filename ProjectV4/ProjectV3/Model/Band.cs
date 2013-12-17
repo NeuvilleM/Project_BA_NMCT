@@ -60,7 +60,6 @@ namespace ProjectV3.Model
             set { _facebook = value; }
         }
         private ObservableCollection<Genre> _genres;
-
         public ObservableCollection<Genre> Genres
         {
             get { return _genres; }
@@ -116,7 +115,7 @@ namespace ProjectV3.Model
                 return artiesten;
             }
             catch {
-                return new ObservableCollection<Band>();
+                return artiesten;
             }
         }
         private static Genre ZoekGenre(ObservableCollection<Genre> genres, string p)
@@ -198,7 +197,13 @@ namespace ProjectV3.Model
         private int AddGenres(string bandID, ObservableCollection<Genre> observableCollection)
         {
             int iAffected = 0;
-       
+            if (observableCollection.Count == 0)
+            {
+                string sql = "INSERT INTO Artist_Genre VALUES(@aid,@gid)";
+                DbParameter ArtistId = Database.AddParameter("@aid", bandID);
+                DbParameter genreID = Database.AddParameter("@gid", 15);
+                iAffected += Database.ModifyData(sql, ArtistId, genreID);
+            }
             foreach (Genre g in observableCollection)
             {
                 string sql = "INSERT INTO Artist_Genre VALUES(@aid,@gid)";

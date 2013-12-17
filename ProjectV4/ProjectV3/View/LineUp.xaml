@@ -93,7 +93,7 @@
                 <Label Content="Dag:" Padding="5,3" Grid.Row="3" Margin="0.667,0.675,98.726,0" Grid.ColumnSpan="2"/>
                 <Label Content="Podium:" Margin="1.334,0,98.726,0.676" Grid.Row="7" Padding="5,3" Grid.ColumnSpan="2"/>
                 <ComboBox Margin="0,0,1,10" Grid.Row="8" SelectedItem="{Binding SelectedLineUp.Stage, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" ItemsSource="{Binding Stages}" SelectedValue="{Binding SelectedLineUp.Stage.ID}" SelectedValuePath="ID" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
-                <DatePicker Grid.Row="4" Margin="0,0,0,10" SelectedDate="{Binding SelectedLineUp.Date, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" DisplayDateEnd="{Binding Festival.EndDate}" DisplayDateStart="{Binding Festival.StartDate.Date, Mode=OneWay}"  DisplayDate="{Binding SelectedLineUp.Date, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
+                <DatePicker Grid.Row="4" Margin="0,0,0,10" SelectedDate="{Binding SelectedLineUp.Date, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" DisplayDateEnd="{Binding Festival.EndDate.Date, Mode=OneWay}" DisplayDateStart="{Binding Festival.StartDate.Date, Mode=OneWay}"  DisplayDate="{Binding SelectedLineUp.Date, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
                 <Label Content="-" Margin="80,32,0,22" Grid.Row="5" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Center" Padding="5,5,5,0" HorizontalAlignment="Left" Width="47" Grid.RowSpan="2"/>
             </Grid>
         </Grid>

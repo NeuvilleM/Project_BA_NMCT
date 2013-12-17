@@ -16,9 +16,16 @@ namespace ProjectV3.View.Converters
         {
             string genres = "";
             ObservableCollection<Genre> ocG = value as ObservableCollection<Genre>;
+            int ilaatste = ocG.Count();
+            int iTeller = 1;
             foreach(Genre g in ocG)
             {
-                genres += g.Name + ", ";
+                if (iTeller == ilaatste) genres += g.Name;
+                else
+                {
+                    genres += g.Name + ", ";
+                }
+                iTeller++;
             }
             return genres;
         }
