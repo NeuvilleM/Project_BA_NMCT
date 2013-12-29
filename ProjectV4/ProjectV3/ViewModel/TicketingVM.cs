@@ -208,7 +208,13 @@ namespace ProjectV3.ViewModel
         #endregion
         #endregion
         #region 'Commands for ticketexport'
-        public ICommand SaveFileCommand { get { return new RelayCommand(SaveDataToFile); } }
+        public ICommand SaveFileCommand { get { return new RelayCommand(SaveDataToFile, CanExecuteSaveFileCommand); } }
+
+        private bool CanExecuteSaveFileCommand()
+        {
+            if (SelectedTicket.ID != null && SelectedTicket.ID != "") return true;
+            return false;
+        }
         public ICommand SaveFilesCommand { get { return new RelayCommand(SaveDataToFiles); } }
         public void SaveDataToFiles()
         {
@@ -318,9 +324,7 @@ namespace ProjectV3.ViewModel
                    
                     //bookmarks["Barcode"].Parent.InsertAfter<Run>(new Run(new DocumentFormat.OpenXml.Wordprocessing.Table(t)), bookmarks["Barcode"]);
                     newdoc.Close();
-                }
-                
-                      
+                }          
         }
         #endregion
 

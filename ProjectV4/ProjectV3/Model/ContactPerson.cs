@@ -39,6 +39,7 @@ namespace ProjectV3.Model
         }
         private ContactpersonType _jobRole;
         [Required(ErrorMessage="Je moet verplicht een functie opgeven")]
+       
         public ContactpersonType JobRole
         {
             get { return _jobRole; }
@@ -52,6 +53,7 @@ namespace ProjectV3.Model
             set { _city = value; }
         }
         private String _email;
+        [Required(ErrorMessage="Je moet een email meegeven")]
         [EmailAddress(ErrorMessage="Zorg voor een correct emailformaat")]
         [StringLength(45,ErrorMessage="De email moet tussen 45 en 5 tekens zijn.")]
         public String Email

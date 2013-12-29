@@ -96,6 +96,7 @@
     <Compile Include="ViewModel\HomePageVM.cs" />
     <Compile Include="ViewModel\IPage.cs" />
     <Compile Include="ViewModel\ObservableObject.cs" />
+    <Compile Include="View\Converters\DateTimeToStringForDisplayPropertyConverter.cs" />
     <Compile Include="View\Converters\IdAsStringToIntConverter.cs" />
     <Compile Include="View\Converters\MultiDateToStringConverter.cs" />
     <Compile Include="View\Converters\ObservableGenresToStringConverter.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="View\Ticketing.xaml.cs">
       <DependentUpon>Ticketing.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Validatie\DateRangeValidator.cs" />
     <Page Include="View\Artist.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

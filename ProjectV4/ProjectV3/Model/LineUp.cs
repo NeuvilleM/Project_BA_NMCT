@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectV3.View.Validators;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -23,6 +24,8 @@ namespace ProjectV3.Model
         }
         private DateTime _date;
         [Required(ErrorMessage="Je moet verplicht een datum meegeven.")]
+        //[Range(typeof(DateTime),Festival.start.ToShortDateString(),Festival.End.ToShortDateString(),ErrorMessage="Value for {0} must be between {1} and {2}")]
+        [DateRangeValidator(ErrorMessage="Lineup moet plaatsvinden tijdens het festival")]
         public DateTime Date
         {
             get { return _date; }

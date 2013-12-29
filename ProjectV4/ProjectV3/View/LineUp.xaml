@@ -8,6 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
     <UserControl.Resources>
+        <Converters:DateTimeToStringForDisplayPropertyConverter x:Key="DateTimeToStringForDisplayPropertyConverter"/>
         <Converters:IdAsStringToIntConverter x:Key="IdAsStringToIntConverter"/>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -35,17 +36,18 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="4*"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
-                <Label Grid.ColumnSpan="2" Content="Podia" Margin="0,0,0.212,0" HorizontalContentAlignment="Stretch"/>
-                <TextBox Grid.Row="1" TextWrapping="Wrap" Margin="0,0,2.659,10" Text="{Binding SelectedStage.Name, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
-                <ListBox Margin="0,10,0.001,0" Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding Stages}" SelectedItem="{Binding SelectedStage}"/>
-                <Button Content="New" Margin="9.999,0,10.212,15.286" Grid.Row="1" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Command="{Binding NewStage, Mode=OneWay}"/>
-                <Button Content="Delete" Margin="10,10,10,254" Grid.Row="3" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Command="{Binding DeleteStage, Mode=OneWay}"/>
-                <Button Content="Save" Margin="10,10,10,4" Grid.Row="2" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Command="{Binding SaveStage, Mode=OneWay}"/>
+                <Label Grid.ColumnSpan="2" Content="Podia" HorizontalContentAlignment="Stretch" FontSize="48" HorizontalAlignment="Left"/>
+                <TextBox Grid.Row="1" TextWrapping="Wrap" Margin="0,0,2,44" Text="{Binding SelectedStage.Name, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
+                <ListBox Margin="0,60,0,0" Grid.Row="1" Grid.RowSpan="4" ItemsSource="{Binding Stages}" SelectedItem="{Binding SelectedStage}"/>
+                <Button Content="New" Margin="10,0,10,15" Grid.Row="1" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Command="{Binding NewStage, Mode=OneWay}"/>
+                <Button Content="Delete" Margin="10,0,10,24" Grid.Row="3" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Command="{Binding DeleteStage, Mode=OneWay}"/>
+                <Button Content="Save" Margin="10,0,10,14" Grid.Row="2" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Command="{Binding SaveStage, Mode=OneWay}"/>
             </Grid>
             <Grid Grid.Column="1" Margin="0,0,0.844,10">
                 <Grid.RowDefinitions>
@@ -59,41 +61,41 @@
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Line-Up&#xA;" Height="50.743" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,0,10.001,0"/>
+                <Label Content="Line-Up&#xA;" Height="72" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,0,10,0" FontSize="48"/>
                 <ListBox Grid.RowSpan="4" Grid.Row="1" ItemsSource="{Binding LineUps}" SelectedItem="{Binding SelectedLineUp}"/>
                 <Button Content="New" Margin="10,0.457,10,14.829" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Grid.Row="1" Command="{Binding NewLineUp, Mode=OneWay}"/>
                 <Button Content="Save" Margin="9.999,0,10.001,15.286" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Grid.Row="2" Command="{Binding SaveLineUp, Mode=OneWay}"/>
                 <Button Content="Delete" Margin="10,0,10,15.285" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Grid.Row="3" Command="{Binding DeleteLineUp, Mode=OneWay}"/>
             </Grid>
-            <Grid Grid.Column="2" Margin="0,0,0,10">
+            <Grid Grid.Column="2" Margin="10,0,-10,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1.8*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.2*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1.1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="3.5*"/>
 
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="34*"/>
+                    <ColumnDefinition Width="9*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Artist&#xA;" Margin="0.667,0,0,1.217" Grid.ColumnSpan="2" Height="49.297" VerticalAlignment="Bottom"/>
-                <Label Content="Artiest:" Padding="5,3" Grid.Row="1" Margin="0,0,0,0.675"/>
-                <Label Content="Uur:" Margin="0.667,0,0,0.676" Grid.Row="5" Padding="5,3"/>
+                <Label Content="Artist&#xA;" Margin="0,0,1,10" Grid.ColumnSpan="2" Height="65" VerticalAlignment="Bottom" FontSize="48"/>
+                <Label Content="Artiest:" Padding="5,3" Grid.Row="1" Margin="0,0,0,1"/>
+                <Label Content="Uur:" Margin="1,0,0,1" Grid.Row="5" Padding="5,3"/>
                 <TextBox Grid.Row="6" TextWrapping="Wrap" Text="{Binding SelectedLineUp.From, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Margin="1,0,0,22" HorizontalAlignment="Left" Width="75" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
                 <TextBox Grid.Row="6" TextWrapping="Wrap" Text="{Binding SelectedLineUp.Until, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Margin="127,0,0,22" HorizontalAlignment="Left" Width="73" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
                 <Image Grid.Column="1" Grid.Row="1" Grid.RowSpan="3"/>
-                <ComboBox Margin="2,37,99,10" Grid.Row="1" SelectedItem="{Binding SelectedLineUp.Band}" ItemsSource="{Binding Artists}" Grid.ColumnSpan="2" Grid.RowSpan="2" SelectedValue="{Binding SelectedLineUp.Band.ID}" SelectedValuePath="ID" DisplayMemberPath="Name" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
-                <Label Content="Dag:" Padding="5,3" Grid.Row="3" Margin="0.667,0.675,98.726,0" Grid.ColumnSpan="2"/>
-                <Label Content="Podium:" Margin="1.334,0,98.726,0.676" Grid.Row="7" Padding="5,3" Grid.ColumnSpan="2"/>
+                <ComboBox Margin="2,37,2,10" Grid.Row="1" SelectedItem="{Binding SelectedLineUp.Band}" ItemsSource="{Binding Artists}" Grid.RowSpan="2" SelectedValue="{Binding SelectedLineUp.Band.ID}" SelectedValuePath="ID" DisplayMemberPath="Name" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
+                <Label Content="Dag:" Padding="5,3" Grid.Row="3" Margin="1,1,2,0"/>
+                <Label Content="Podium:" Margin="1,0,2,1" Grid.Row="7" Padding="5,3"/>
                 <ComboBox Margin="0,0,1,10" Grid.Row="8" SelectedItem="{Binding SelectedLineUp.Stage, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" ItemsSource="{Binding Stages}" SelectedValue="{Binding SelectedLineUp.Stage.ID}" SelectedValuePath="ID" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
-                <DatePicker Grid.Row="4" Margin="0,0,0,10" SelectedDate="{Binding SelectedLineUp.Date, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" DisplayDateEnd="{Binding Festival.EndDate.Date, Mode=OneWay}" DisplayDateStart="{Binding Festival.StartDate.Date, Mode=OneWay}"  DisplayDate="{Binding SelectedLineUp.Date, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
+                <DatePicker Grid.Row="4" Margin="0,0,0,22" SelectedDate="{Binding SelectedLineUp.Date, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" DisplayDateEnd="{Binding Festival.EndDate, Converter={StaticResource DateTimeToStringForDisplayPropertyConverter}}" DisplayDateStart="{Binding Festival.StartDate, Converter={StaticResource DateTimeToStringForDisplayPropertyConverter}}"  DisplayDate="{Binding SelectedLineUp.Date, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
                 <Label Content="-" Margin="80,32,0,22" Grid.Row="5" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Center" Padding="5,5,5,0" HorizontalAlignment="Left" Width="47" Grid.RowSpan="2"/>
             </Grid>
         </Grid>

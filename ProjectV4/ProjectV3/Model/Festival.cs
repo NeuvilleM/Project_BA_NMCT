@@ -12,6 +12,8 @@ namespace ProjectV3.Model
 {
     class Festival: IDataErrorInfo
     {
+        public static DateTime start = DateTime.Now;
+        public static DateTime End = DateTime.Now;
         private String _name;
         [Required(ErrorMessage="De naam voor het festival is verplicht.")]
         [StringLength(50,MinimumLength =2, ErrorMessage="De naam moet tussen de 2 en 45 karakters hebben.")]
@@ -26,14 +28,18 @@ namespace ProjectV3.Model
         public DateTime StartDate
         {
             get { return _startDate; }
-            set { _startDate = value; }
+            set { _startDate = value;
+            start = _startDate;
+            }
         }
         private DateTime _endDate;
         [Required(ErrorMessage="De einddatum is verplicht.")]
         public DateTime EndDate
         {
             get { return _endDate; }
-            set { _endDate = value; }
+            set { _endDate = value;
+            End = _endDate;
+            }
         }
         private String _imagelink;
         
@@ -80,7 +86,7 @@ namespace ProjectV3.Model
                 string sql = "SELECT * from Festival";
                 DbDataReader reader = Database.GetData(sql);
                 reader.Read();
-                festi.EndDate = Convert.ToDateTime(reader["End"].ToString());
+                festi.EndDate = Convert.ToDateTime(reader["FestivalEnd"].ToString());
                 festi.ImageLink = reader["Picture"].ToString();
                 festi.Name = reader["FestivalNaam"].ToString();
                 festi.StartDate = Convert.ToDateTime(reader["Start"].ToString());
@@ -99,7 +105,7 @@ namespace ProjectV3.Model
             DbParameter End = Database.AddParameter("@End", MakeDateForSQL(this.EndDate));
             DbParameter id = Database.AddParameter("@id", 1);
             DbParameter Pic = Database.AddParameter("@Pic", this.ImageLink);
-            string sql = "UPDATE festival SET FestivalNaam=@Name, Start=@Start, End=@End, Picture=@Pic WHERE Id=@id";
+            string sql = "UPDATE festival SET FestivalNaam=@Name, Start=@Start, FestivalEnd=@End, Picture=@Pic WHERE Id=@id";
             int iAffectedRows = Database.ModifyData(sql, name, Start, End, Pic, id);
         }
         private string MakeDateForSQL(DateTime dateTime)

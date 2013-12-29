@@ -107,6 +107,7 @@ ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemp
             </ComboBox.ItemTemplate>
         </ComboBox>
         <Label Content="Artist:" Margin="45,0,382,15" Grid.Row="1"/>
+        <TextBlock HorizontalAlignment="Left" Margin="47,10,0,0" TextWrapping="Wrap" Text="Artiesten" VerticalAlignment="Top" Foreground="White" FontSize="48"/>
 
     </Grid>
 </UserControl>

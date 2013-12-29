@@ -6,7 +6,7 @@
              xmlns:Converters="clr-namespace:ProjectV3.View.Converters" xmlns:ViewModel="clr-namespace:ProjectV3.ViewModel" x:Class="ProjectV3.View.HomePage" 
              mc:Ignorable="d" 
                 xmlns:vm="clr-namespace:ProjectV3.ViewModel"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="500">
     <UserControl.Resources>
         <Converters:StringToUriConverter x:Key="StringToUriConverter"/>
         <Converters:MultiDateToStringConverter x:Key="MultiDateToStringConverter" />
@@ -15,10 +15,19 @@
         <vm:SettingsVM />
     </UserControl.DataContext>
     <Grid>
-        <Image HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Margin="76,142,145,105" Source="{Binding Festival.ImageLink, Converter={StaticResource StringToUriConverter}}" Stretch="Uniform"/>
-        <Label Content="Welkom bij Festival Planner." Margin="76,60,-100,206" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="25"/>
-        <TextBlock Foreground="White" Text="{Binding Festival.Name}" Margin="76,94,129,186"/>
-        <TextBlock DataContext="{Binding Festival}" HorizontalAlignment="Stretch" Margin="76,114,-221,163" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Foreground="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="73*"/>
+            <RowDefinition Height="144*"/>
+            <RowDefinition Height="283*"/>
+        </Grid.RowDefinitions>
+        <Image HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Margin="0,106,0,97" Source="{Binding Festival.ImageLink, Converter={StaticResource StringToUriConverter}}" Stretch="Uniform" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"/>
+        <Label Content="Welkom bij Festival Planner." Margin="47,1,-383,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="48" Grid.ColumnSpan="2"/>
+        <TextBlock Foreground="White" Text="{Binding Festival.Name}" Margin="47,0,198,97" FontSize="24" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <TextBlock DataContext="{Binding Festival}" HorizontalAlignment="Stretch" Margin="47,52,10,38" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Foreground="White" FontSize="24" Grid.Row="1" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="2">
             <TextBlock.Text>
                 <MultiBinding Converter="{StaticResource MultiDateToStringConverter}">
                     <Binding Path="StartDate" />

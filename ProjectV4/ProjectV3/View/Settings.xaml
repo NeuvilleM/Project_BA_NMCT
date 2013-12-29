@@ -14,7 +14,7 @@
     <UserControl.DataContext>
         <vmm:SettingsVM />
     </UserControl.DataContext>
-    <Grid Margin="16.675,0,2,0">
+    <Grid Margin="47,0,2,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="1*"/>
@@ -44,9 +44,9 @@
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Start:" Margin="0,-1,10,10"/>
-                <DatePicker Margin="0,0,10,10" Grid.Column="1" SelectedDate="{Binding Festival.StartDate}" FirstDayOfWeek="Monday" DisplayDate="{Binding Festival.StartDate.Date, Mode=OneWay}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
+                <DatePicker x:Name="datePicker" Margin="0,0,10,10" Grid.Column="1" SelectedDate="{Binding Festival.StartDate}" FirstDayOfWeek="Monday" DisplayDate="{Binding Festival.StartDate.Date, Mode=OneWay}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
                 <Label Content="End:" Margin="0,-1,10,10" Grid.Column="2"/>
-                <DatePicker Margin="0,0,10,10" Grid.Column="3" SelectedDate="{Binding Festival.EndDate}" FirstDayOfWeek="Monday" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
+                <DatePicker Margin="0,0,10,10" Grid.Column="3" SelectedDate="{Binding Festival.EndDate}" FirstDayOfWeek="Monday" Validation.ErrorTemplate="{StaticResource ErrorTemplate }" DisplayDateStart="{Binding SelectedDate, ElementName=datePicker, Mode=OneWay}"/>
             </Grid>
             <Image Margin="10,10,233,17" Grid.Row="4" Source="{Binding Festival.ImageLink, Converter={StaticResource StringToImageSourceConverter}}"/>
             <TextBox Margin="0,92,0,17" Grid.Row="4" TextWrapping="Wrap" Text="{Binding Festival.ImageLink,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }" HorizontalAlignment="Right" Width="228"/>
@@ -89,6 +89,7 @@
                 <Button Content="Delete" Height="38.678" VerticalAlignment="Top" Margin="152.218,0,0,0" HorizontalAlignment="Left" Width="72.78" Command="{Binding DeleteGenre, Mode=OneWay}"/>
             </Grid>
         </Grid>
+        <TextBlock HorizontalAlignment="Left" Height="92" Margin="-1,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="284" FontSize="48" Foreground="White"><Run Text="Settings"/><LineBreak/><Run/></TextBlock>
 
     </Grid>
 </UserControl>

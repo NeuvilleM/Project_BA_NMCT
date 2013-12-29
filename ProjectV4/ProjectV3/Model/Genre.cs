@@ -77,7 +77,7 @@ namespace ProjectV3.Model
                 }
                 ObservableCollection<Genre> genresSort = new ObservableCollection<Genre>(from i in genres orderby i.Name select i);
                 reader.Close();
-                return genres;
+                return genresSort;
             }
             catch
             {

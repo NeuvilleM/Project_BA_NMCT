@@ -133,6 +133,8 @@ namespace ProjectV3.ViewModel
             if (SelectedContact == null) { NewExecute(); return false; }
             if (SelectedContact.Name == "Name?")
                 return false;
+            if (SelectedContact.JobRole == null || SelectedContact.JobRole.ID == "" || SelectedContact.JobRole.ID == "0") return false;
+            
             if (SelectedContact.IsValid()) return true;
             else return false;
         }
@@ -166,7 +168,7 @@ namespace ProjectV3.ViewModel
             cp.Company = "Company?";
             cp.Email = "Email?";
             cp.City = "City?";
-            cp.JobRole = new ContactpersonType() {ID = "0" };
+            cp.JobRole = new ContactpersonType() {ID = "1" };
             SelectedContact = cp;
             Contacts = ContactPerson.GetContacts();
             ContactsForListbox = Contacts;

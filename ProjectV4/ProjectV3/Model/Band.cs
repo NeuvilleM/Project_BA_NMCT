@@ -31,7 +31,7 @@ namespace ProjectV3.Model
             set { _name = value; }
         }
         private String _picture;
-        
+        [Required(ErrorMessage="Afbeelding is verplicht")]
         [Url (ErrorMessage="Voer een correcte url, of niets in.")]
         public String Picture
         {

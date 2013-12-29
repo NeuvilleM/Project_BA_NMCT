@@ -174,7 +174,6 @@ namespace ProjectV3.ViewModel
             if (SelectedLineUp.IsValid()) return true;
             else return false;
         }
-
         private bool IsTimePlacingCorrect(LineUp SelectedLineUp)
         {
             
@@ -188,8 +187,6 @@ namespace ProjectV3.ViewModel
             // STAP 4: controleren of einde voor start volgende band ligt
             return true;
         }
-
-        
         private int[] getStartAndEnd(LineUp tezoekenlinup)
         {
             int[] uren = new int[4];
@@ -253,7 +250,7 @@ namespace ProjectV3.ViewModel
 
         public void NewExecuteLineUp()
         {
-            LineUp lu = new LineUp() { ID = "0" };
+            LineUp lu = new LineUp() { ID = "0" ,Date=Festival.StartDate};
             lu.Stage = SelectedStage;
             SelectedLineUp = lu;
             LineUps = LineUp.GetLineups(SelectedStage);

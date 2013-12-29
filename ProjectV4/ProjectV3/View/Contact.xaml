@@ -21,9 +21,9 @@
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
-                <Label Content="{Binding Name}" Grid.Column="0" Grid.ColumnSpan="2" />
-                <Label Content="{Binding Company}" Grid.Column="0" Grid.Row="1" />
-                <Label Content="{Binding JobRole.Name}" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Right" />
+                <Label Content="{Binding Name}" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" />
+                <Label Content="{Binding Company}" Grid.Column="0" Grid.Row="1" FontSize="14"/>
+                <Label Content="{Binding JobRole.Name}" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Right" FontSize="14"/>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
@@ -44,7 +44,7 @@
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                 </Style>
             </ListBox.ItemContainerStyle>
-        </ListBox> 
+        </ListBox>
         <Grid Grid.Column="1" HorizontalAlignment="Left" Height="398" Grid.Row="1" VerticalAlignment="Top" Width="99">
             <Button Content="New" Margin="10,10,10,338.3" Command="{Binding NewContact, Mode=OneWay}"/>
             <Button Content="Save" Margin="10,65,10,283.3" Command="{Binding SaveContacts, Mode=OneWay}"/>
@@ -67,20 +67,21 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
             <Label Content="Name:" Margin="10,0,0,10"/>
-            <Label Content="Function:" Margin="10,0,1.5,10" Grid.Row="2" Grid.Column="1"/>
+            <Label Content="Function:" Margin="10,1,2,9" Grid.Column="1"/>
             <TextBox Margin="10,0,0,10" Grid.Row="1" TextWrapping="Wrap" Text="{Binding SelectedContact.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
-            <ComboBox Margin="10,0.001,0,10" Grid.Row="3" Grid.Column="1" ItemsSource="{Binding TypesContactVM}" SelectedItem="{Binding SelectedContact.JobRole}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedContact.JobRole.ID}" SelectedValuePath="ID"  Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
+            <ComboBox Margin="10,1,0,9" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding TypesContactVM}" SelectedItem="{Binding SelectedContact.JobRole}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedContact.JobRole.ID}" SelectedValuePath="ID"  Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
             <Label Content="Company:" Margin="10,0,0,10" Grid.Row="2"/>
             <TextBox Margin="11.5,0,0,10" Grid.Row="3" TextWrapping="Wrap" Text="{Binding SelectedContact.Company, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
             <Label Content="City:" Margin="10,0,0,10" Grid.Row="4"/>
-            <Label Content="Email:" Margin="10,0,0,10" Grid.Row="4" Grid.Column="1"/>
+            <Label Content="Email:" Margin="10,1,0,10" Grid.Row="2" Grid.Column="1"/>
             <Label Content="Phone:" Margin="10,0,0,10" Grid.Row="6"/>
-            <Label Content="Cellphone:" Margin="10,0,0,10" Grid.Row="6" Grid.Column="1"/>
+            <Label Content="Cellphone:" Margin="10,0,0,10" Grid.Row="4" Grid.Column="1"/>
             <TextBox Margin="10,0,1.5,10" Grid.Row="5" TextWrapping="Wrap" Text="{Binding SelectedContact.City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
-            <TextBox Margin="10,0,1.5,10" Grid.Row="5" TextWrapping="Wrap" Text="{Binding SelectedContact.Email,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Grid.Column="1" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
+            <TextBox Margin="10,0,1,10" Grid.Row="3" TextWrapping="Wrap" Text="{Binding SelectedContact.Email,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Grid.Column="1" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
             <TextBox Margin="10,0,1.5,10" Grid.Row="7" TextWrapping="Wrap" Text="{Binding SelectedContact.Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
-            <TextBox Margin="11.5,0,0,10" Grid.Row="7" TextWrapping="Wrap" Text="{Binding SelectedContact.Cellphone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Grid.Column="1" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
+            <TextBox Margin="12,0,-1,10" Grid.Row="5" TextWrapping="Wrap" Text="{Binding SelectedContact.Cellphone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Grid.Column="1" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
         </Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="50,22,0,0" TextWrapping="Wrap" Text="Contacten" VerticalAlignment="Top" Foreground="White" FontSize="48"/>
 
     </Grid>
 </UserControl>
