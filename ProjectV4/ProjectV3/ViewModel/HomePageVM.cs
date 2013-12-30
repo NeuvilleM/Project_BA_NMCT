@@ -12,7 +12,7 @@ namespace ProjectV3.ViewModel
 
         public string Name
         {
-            get { return "HomePage"; } // UNIEKE naam!
+            get { return "Startpagina"; } // UNIEKE naam!
         }
     }
 }

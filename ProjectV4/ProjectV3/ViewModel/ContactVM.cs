@@ -131,7 +131,7 @@ namespace ProjectV3.ViewModel
         private bool CanExecuteSaveContacten()
         {
             if (SelectedContact == null) { NewExecute(); return false; }
-            if (SelectedContact.Name == "Name?")
+            if (SelectedContact.Name == "Naam?")
                 return false;
             if (SelectedContact.JobRole == null || SelectedContact.JobRole.ID == "" || SelectedContact.JobRole.ID == "0") return false;
             
@@ -162,12 +162,12 @@ namespace ProjectV3.ViewModel
         public void NewExecute()
         {
             ContactPerson cp = new ContactPerson();
-            cp.Name = "Name?";
-            cp.Phone = "Phone?";
-            cp.Cellphone = "Cellphone";
-            cp.Company = "Company?";
+            cp.Name = "Naam?";
+            cp.Phone = "Telefoon?";
+            cp.Cellphone = "GSM-nummer";
+            cp.Company = "Bedrijf?";
             cp.Email = "Email?";
-            cp.City = "City?";
+            cp.City = "Stad?";
             cp.JobRole = new ContactpersonType() {ID = "1" };
             SelectedContact = cp;
             Contacts = ContactPerson.GetContacts();

@@ -19,7 +19,7 @@
             <RowDefinition Height="79*"/>
             <RowDefinition Height="221*"/>
         </Grid.RowDefinitions>
-        <Label Margin="50,64,10,20" Content="Possibilities" FontSize="48"/>
+        <Label Margin="50,64,10,20" Content="Ticketing" FontSize="48"/>
         <Grid Grid.Column="2" Grid.Row="1" Margin="2,2,0,27">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="242*"/>
@@ -39,8 +39,8 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Label Content="Name:" Height="26.209" Margin="9.999,0,18.397,0" VerticalAlignment="Top" Width="214" Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="1"/>
-            <Label Content="Firstname:" Height="28.573" Margin="19.198,0,9.199,0" VerticalAlignment="Top" Width="214" Grid.Row="7"/>
+            <Label Content="Achternaam:" Height="26.209" Margin="9.999,0,18.397,0" VerticalAlignment="Top" Width="214" Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="1"/>
+            <Label Content="Voornaam:" Height="28.573" Margin="19.198,0,9.199,0" VerticalAlignment="Top" Width="214" Grid.Row="7"/>
             <Label Content="E-mail:" Height="26.209" Margin="19.198,0,9.199,0" VerticalAlignment="Top" Width="214" Grid.Row="9"/>
             <TextBox Height="26.209" Margin="9.999,0,18.397,0" Grid.Row="8" TextWrapping="Wrap" VerticalAlignment="Top" Width="214" Text="{Binding SelectedTicket.HolderLast, UpdateSourceTrigger=PropertyChanged,
 ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }" Grid.ColumnSpan="2" Grid.Column="1"/>
@@ -59,13 +59,13 @@ ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemp
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="New" Margin="10" Command="{Binding NewTicket, Mode=OneWay}"/>
-                <Button Content="Save" Margin="10" Grid.Column="1" Command="{Binding SaveTicket, Mode=OneWay}"/>
-                <Button Content="Delete" Margin="10" Grid.Column="2" Command="{Binding DeleteTicket, Mode=OneWay}"/>
+                <Button Content="Nieuw" Margin="10" Command="{Binding NewTicket, Mode=OneWay}"/>
+                <Button Content="Opslaan" Margin="10" Grid.Column="1" Command="{Binding SaveTicket, Mode=OneWay}"/>
+                <Button Content="Verwijderen" Margin="10" Grid.Column="2" Command="{Binding DeleteTicket, Mode=OneWay}"/>
                 <Button Content="Print" Margin="10,10,11,10" Grid.Column="3" Command="{Binding SaveFileCommand, Mode=OneWay}"/>
             </Grid>
-            <Label Content="Amount:" Height="26" Margin="11,2,96,0" VerticalAlignment="Top" Grid.Row="9" Grid.Column="1"/>
-            <Button Content="Print all" Margin="10,0,10,10" Command="{Binding SaveFilesCommand, Mode=OneWay}" Grid.Column="2"/>
+            <Label Content="Aantal:" Height="26" Margin="11,2,96,0" VerticalAlignment="Top" Grid.Row="9" Grid.Column="1"/>
+            <Button Content="Print alles" Margin="10,0,10,10" Command="{Binding SaveFilesCommand, Mode=OneWay}" Grid.Column="2"/>
             <Grid Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Left" Height="36" Margin="0,1,0,0" Grid.Row="10" VerticalAlignment="Top" Width="244">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="19*"/>
@@ -95,9 +95,9 @@ ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemp
 ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
             <TextBox Margin="50,0,0,7.1" Grid.Row="2" TextWrapping="Wrap" Text="{Binding SelectedType.Name, UpdateSourceTrigger=PropertyChanged,
 ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
-            <Label Content="Available:" Margin="50,0,194.836,7.1" Grid.Row="5" Width="80"/>
-            <Label Content="Price:" Margin="50,0,199.836,7.1" Grid.Row="3" Width="75"/>
-            <Label Content="Day / Sort:" Margin="50,2.1,194.836,5" Width="80" Grid.Row="1"/>
+            <Label Content="Beschikbaar" Margin="50,0,194.836,7.1" Grid.Row="5" Width="80"/>
+            <Label Content="Prijs:" Margin="50,0,199.836,7.1" Grid.Row="3" Width="75"/>
+            <Label Content="Naam:" Margin="50,2.1,194.836,5" Width="80" Grid.Row="1"/>
             <ListBox Margin="50,0,5,5" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}"/>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -105,12 +105,11 @@ ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemp
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Button Content="New" Margin="0,0.06,12.6,10" HorizontalContentAlignment="Center" Command="{Binding NewType, Mode=OneWay}"/>
-                <Button Content="Save" Margin="0,0,12.6,10" HorizontalContentAlignment="Center" Grid.Row="1" Command="{Binding SaveType, Mode=OneWay}"/>
-                <Button Content="Delete" Margin="0,0,12.6,10" Grid.Row="2" Command="{Binding DeleteType, Mode=OneWay}"/>
+                <Button Content="Nieuw" Margin="0,0.06,12.6,10" HorizontalContentAlignment="Center" Command="{Binding NewType, Mode=OneWay}"/>
+                <Button Content="Opslaan" Margin="0,0,12.6,10" HorizontalContentAlignment="Center" Grid.Row="1" Command="{Binding SaveType, Mode=OneWay}"/>
+                <Button Content="Verwijderen" Margin="0,0,12.6,10" Grid.Row="2" Command="{Binding DeleteType, Mode=OneWay}"/>
             </Grid>
         </Grid>
-        <Label Margin="22,64,137,10" Content="Ordered" Grid.Column="2" FontSize="48"/>
 
     </Grid>
 </UserControl>

@@ -26,7 +26,7 @@ namespace ProjectV3.ViewModel
         }
         public string Name
         {
-            get { return "Settings"; }
+            get { return "Instellingen"; }
         }
         private Festival _festival;
 
@@ -92,7 +92,7 @@ namespace ProjectV3.ViewModel
                 NewExecuteJobrole();
                 return false;
             }
-            if (SelectedCPT.Name == "Jobrole?")
+            if (SelectedCPT.Name == "Functie?")
                 return false;
             if (SelectedCPT.IsValid()) return true;
             else return false;
@@ -121,7 +121,7 @@ namespace ProjectV3.ViewModel
 
         public void NewExecuteJobrole()
         {
-            SelectedCPT = new ContactpersonType() { Name = "Jobrole?" };
+            SelectedCPT = new ContactpersonType() { Name = "Functie?" };
             ContactPersonTypes = ContactpersonType.GetContactTypes();
         }
         #endregion
@@ -189,7 +189,7 @@ namespace ProjectV3.ViewModel
         public void NewExecuteGenre()
         {
             Genre g = new Genre();
-            g.Name = "Name?";
+            g.Name = "Naam?";
             SelectedGenre = g;
             Genres = Genre.GetGenres();
         }

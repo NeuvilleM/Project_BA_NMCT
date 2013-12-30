@@ -42,12 +42,12 @@
                     <RowDefinition/>
                     <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
-                <Label Grid.ColumnSpan="2" Content="Podia" HorizontalContentAlignment="Stretch" FontSize="48" HorizontalAlignment="Left"/>
+                <Label Grid.ColumnSpan="2" Content="Line-up" HorizontalContentAlignment="Stretch" FontSize="48" HorizontalAlignment="Left"/>
                 <TextBox Grid.Row="1" TextWrapping="Wrap" Margin="0,0,2,44" Text="{Binding SelectedStage.Name, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>
                 <ListBox Margin="0,60,0,0" Grid.Row="1" Grid.RowSpan="4" ItemsSource="{Binding Stages}" SelectedItem="{Binding SelectedStage}"/>
-                <Button Content="New" Margin="10,0,10,15" Grid.Row="1" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Command="{Binding NewStage, Mode=OneWay}"/>
-                <Button Content="Delete" Margin="10,0,10,24" Grid.Row="3" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Command="{Binding DeleteStage, Mode=OneWay}"/>
-                <Button Content="Save" Margin="10,0,10,14" Grid.Row="2" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Command="{Binding SaveStage, Mode=OneWay}"/>
+                <Button Content="Nieuw" Margin="10,0,10,15" Grid.Row="1" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Command="{Binding NewStage, Mode=OneWay}"/>
+                <Button Content="Verwijderen" Margin="10,0,10,24" Grid.Row="3" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Command="{Binding DeleteStage, Mode=OneWay}"/>
+                <Button Content="Opslaan" Margin="10,0,10,14" Grid.Row="2" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Command="{Binding SaveStage, Mode=OneWay}"/>
             </Grid>
             <Grid Grid.Column="1" Margin="0,0,0.844,10">
                 <Grid.RowDefinitions>
@@ -61,11 +61,10 @@
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Line-Up&#xA;" Height="72" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,0,10,0" FontSize="48"/>
                 <ListBox Grid.RowSpan="4" Grid.Row="1" ItemsSource="{Binding LineUps}" SelectedItem="{Binding SelectedLineUp}"/>
-                <Button Content="New" Margin="10,0.457,10,14.829" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Grid.Row="1" Command="{Binding NewLineUp, Mode=OneWay}"/>
-                <Button Content="Save" Margin="9.999,0,10.001,15.286" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Grid.Row="2" Command="{Binding SaveLineUp, Mode=OneWay}"/>
-                <Button Content="Delete" Margin="10,0,10,15.285" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Grid.Row="3" Command="{Binding DeleteLineUp, Mode=OneWay}"/>
+                <Button Content="Nieuw" Margin="10,0.457,10,14.829" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Grid.Row="1" Command="{Binding NewLineUp, Mode=OneWay}"/>
+                <Button Content="Opslaan" Margin="9.999,0,10.001,15.286" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Grid.Row="2" Command="{Binding SaveLineUp, Mode=OneWay}"/>
+                <Button Content="Verwijderen" Margin="10,0,10,15.285" Grid.Column="1" RenderTransformOrigin="0.299,-0.786" Grid.Row="3" Command="{Binding DeleteLineUp, Mode=OneWay}"/>
             </Grid>
             <Grid Grid.Column="2" Margin="10,0,-10,10">
                 <Grid.RowDefinitions>
@@ -85,7 +84,6 @@
                     <ColumnDefinition Width="34*"/>
                     <ColumnDefinition Width="9*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Artist&#xA;" Margin="0,0,1,10" Grid.ColumnSpan="2" Height="65" VerticalAlignment="Bottom" FontSize="48"/>
                 <Label Content="Artiest:" Padding="5,3" Grid.Row="1" Margin="0,0,0,1"/>
                 <Label Content="Uur:" Margin="1,0,0,1" Grid.Row="5" Padding="5,3"/>
                 <TextBox Grid.Row="6" TextWrapping="Wrap" Text="{Binding SelectedLineUp.From, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Margin="1,0,0,22" HorizontalAlignment="Left" Width="75" Validation.ErrorTemplate="{StaticResource ErrorTemplate }"/>

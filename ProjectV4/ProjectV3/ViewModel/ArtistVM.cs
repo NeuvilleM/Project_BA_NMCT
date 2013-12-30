@@ -48,7 +48,7 @@ namespace ProjectV3.ViewModel
        
         public string Name
         {
-            get { return "Artist"; }
+            get { return "Artiest"; }
         }
         private Band _geselecteerdeArtiest;
         public Band GeselecteerdeArtiest
@@ -100,7 +100,7 @@ namespace ProjectV3.ViewModel
             {
                 NewExecute();
                 return false; }
-            if (GeselecteerdeArtiest.Name == "Name?")
+            if (GeselecteerdeArtiest.Name == "Naam?")
             {
               return false;
             }
@@ -130,15 +130,14 @@ namespace ProjectV3.ViewModel
         public void NewExecute()
         {
             Band nieuweband = new Band();
-            nieuweband.Name = "Name?";
-            nieuweband.Description="Description?";
-            nieuweband.Twitter="@???";
-            nieuweband.Facebook = "facebook.com/???";
-            nieuweband.Picture = "NoImage";
+            nieuweband.Name = "Naam?";
+            nieuweband.Description="Beschrijving?";
+            nieuweband.Twitter="???";
+            nieuweband.Facebook = "???";
+            nieuweband.Picture = "Geen afbeelding";
             nieuweband.Genres = new ObservableCollection<Genre>();
             GeselecteerdeArtiest = nieuweband;
             Bands = Band.GetArtists();
-            Console.WriteLine("binnegekomen bij artistVM via icommand voor nieuwe band");
         }
         #endregion
         #region 'delete-command'
