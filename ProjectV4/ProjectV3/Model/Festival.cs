@@ -12,6 +12,7 @@ namespace ProjectV3.Model
 {
     class Festival: IDataErrorInfo
     {
+        #region 'Fields en implemented methodes'
         public static DateTime start = DateTime.Now;
         public static DateTime End = DateTime.Now;
         private String _name;
@@ -50,7 +51,7 @@ namespace ProjectV3.Model
         }
         public string Error
         {
-            get { return "Object Band is niet geldig."; }
+            get { return "Object Festival is niet geldig."; }
         }
 
         public string this[string columnName]
@@ -77,7 +78,8 @@ namespace ProjectV3.Model
             return Validator.TryValidateObject(this, new ValidationContext(this, null, null),
             null, true);
         }
-        
+        #endregion
+        #region 'Ophalen data en verwerken'
         public static Festival GetFestival()
         {
             try
@@ -86,10 +88,18 @@ namespace ProjectV3.Model
                 string sql = "SELECT * from Festival";
                 DbDataReader reader = Database.GetData(sql);
                 reader.Read();
-                festi.EndDate = Convert.ToDateTime(reader["FestivalEnd"].ToString());
+                if (!DBNull.Value.Equals(reader["FestivalEnd"]))
+                {
+                    festi.EndDate = Convert.ToDateTime(reader["FestivalEnd"].ToString());
+                }
+                else { festi.EndDate = DateTime.Now.Date; }
                 festi.ImageLink = reader["Picture"].ToString();
                 festi.Name = reader["FestivalNaam"].ToString();
-                festi.StartDate = Convert.ToDateTime(reader["Start"].ToString());
+                if (!DBNull.Value.Equals(reader["Start"]))
+                {
+                    festi.StartDate = Convert.ToDateTime(reader["Start"].ToString());
+                }
+                else festi.StartDate = DateTime.Now.Date;
                 reader.Close();
                 return festi;
             }
@@ -115,6 +125,7 @@ namespace ProjectV3.Model
             date += Convert.ToString(dateTime.Day);
             return date;
         }
+        #endregion
     }
 
 }

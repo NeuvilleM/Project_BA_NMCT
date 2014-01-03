@@ -40,7 +40,7 @@ namespace ProjectV3.Model
         }
         public string Error
         {
-            get { return "Object Band is niet geldig."; }
+            get { return "Object ContactpersonType is niet geldig."; }
         }
 
         public string this[string columnName]

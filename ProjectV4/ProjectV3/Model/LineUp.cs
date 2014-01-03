@@ -72,7 +72,7 @@ namespace ProjectV3.Model
         }
         public string Error
         {
-            get { return "Object Band is niet geldig."; }
+            get { return "Object LineUp is niet geldig."; }
         }
 
         public string this[string columnName]
@@ -128,8 +128,16 @@ namespace ProjectV3.Model
             newlu.Stage = selectedS;
             newlu.Until = reader["Einde"].ToString();
             newlu.From = reader["Start"].ToString();
-            newlu.Date = Convert.ToDateTime(reader["DateOfPlay"].ToString());
-            newlu.Band = ZoekBand(reader["Artist"].ToString());
+            if (!DBNull.Value.Equals(reader["DateOfPlay"]))
+            {
+                newlu.Date = Convert.ToDateTime(reader["DateOfPlay"].ToString());
+            }
+            else newlu.Date = DateTime.Now.Date;
+            if (!DBNull.Value.Equals(reader["Artist"]))
+            {
+                newlu.Band = ZoekBand(reader["Artist"].ToString());
+            }
+            else { newlu.Band = new Band(); }
             return newlu;
         }
         private static Model.Band ZoekBand(string id)
